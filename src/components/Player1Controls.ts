@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js'
 import { AbstractCharacterControl } from '../AbstractCharacterControl'
-
+import { Animations } from '../AbstractCharacterControl'
 
 export class Player1Controls extends AbstractCharacterControl {
     path: string
@@ -47,9 +47,9 @@ protected async loadModel(startingPosition: THREE.Vector3): Promise<THREE.Group>
   protected loadAnimations(): Promise<void> {
     
     let loadedCount = 0
-
+    const animationNames = Object.values(Animations)
     return new Promise((resolve, reject) => {
-        for (const name of this.animationsMap.keys()) {
+        for (const name of animationNames) {
             this.loader.load(this.getPath(`${name}.fbx`), (animFbx) => {
                 if (animFbx.animations.length > 0) {
                     const clip = animFbx.animations[0]

@@ -24,7 +24,6 @@ export abstract class AbstractCharacterControl implements IAbstractCharacterCont
 
   constructor(loader: FBXLoader, startingPosition: THREE.Vector3) {
     this.loader = loader
-    this.setAnimationNames()
     this.position = startingPosition
     this.startingPosition = startingPosition
   }
@@ -42,19 +41,10 @@ export abstract class AbstractCharacterControl implements IAbstractCharacterCont
   public update(delta: number, keysPressed: { [key: string]: boolean }): void {
     let play = '';
     if (keysPressed['c']) {
-        play = 'WalkingBackwards'
-        const moveSpeed = 1 // meters per second
-        const distance = moveSpeed * delta
-        const backward = new THREE.Vector3(0, 0, -0.5)
-        this.model.position.add(backward.multiplyScalar(distance))
+        play = this.walk(delta, -1)
       }
       else if (keysPressed['v']) {
-        play = 'crunch'
-        const moveSpeed = 1 // meters per second
-        const distance = moveSpeed * delta
-        const backward = new THREE.Vector3(0, 0, 0.5)
-        this.model.position.add(backward.multiplyScalar(distance))
-        
+        play = this.walk(delta, 1)
     } else {
       play = 'Idle'
     }
@@ -75,11 +65,18 @@ export abstract class AbstractCharacterControl implements IAbstractCharacterCont
 
     this.mixer.update(delta)
   }
-  private setAnimationNames() {
-    const fileNames: string[] = ['Idle', 'WalkingBackwards']
-    for (const name of fileNames) {
-      this.animationsMap.set(name, null)
-    }
-  }
   
+  protected walk(delta: number, direction: 1 | -1): string {
+    const moveSpeed = 1 // meters per second
+    const distance = moveSpeed * delta
+    const backward = new THREE.Vector3(0, 0, direction*0.5)
+    this.model.position.add(backward.multiplyScalar(distance))
+    return direction === 1 ? Animations.walkForward : Animations.walkBackwards
+  }
+}
+
+export class Animations {
+  public static readonly idle = 'Idle'
+  public static readonly walkForward = 'WalkingForward'
+  public static readonly walkBackwards = 'WalkingBackwards'
 }
