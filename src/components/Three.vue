@@ -146,7 +146,7 @@ const loadCharacters = async (): Promise<void> => {
   const gltfLoader = new GLTFLoader()
   gltf = new GLTFCharacter(
     gltfLoader, 
-    '/character_complete.gltf',  // Our new GLTF file
+    '/character_final_correct.gltf',  // Our new GLTF file
     new THREE.Vector3(0, 0, 0)
   )
   await gltf.init()

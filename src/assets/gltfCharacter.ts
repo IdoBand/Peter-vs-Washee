@@ -13,12 +13,16 @@ export interface IGLTFCharacter {
   update: (delta: number, keysPressed: { [key: string]: boolean }) => void
 }
 
-// Animation names enum for consistency with your existing system
 export class GLTFAnimations {
+  public static readonly tPose = 'TPose'
   public static readonly idle = 'Idle'
   public static readonly walkForward = 'WalkingForward'
   public static readonly walkBackwards = 'WalkingBackwards'
-  public static readonly tPose = 'TPose'
+  public static readonly hurricaneKick = 'HurricaneKick'
+  public static readonly sideKick = 'SideKick'
+  public static readonly PunchLeft  = 'PunchLeft'
+  public static readonly PunchLeft2 = 'PunchLeft2'
+  public static readonly punchRight = 'PunchRight'
 }
 
 export class GLTFCharacter implements IGLTFCharacter {
@@ -181,14 +185,24 @@ export class GLTFCharacter implements IGLTFCharacter {
     let targetAnimation = 'Idle'  // Default to idle
 
     if (keysPressed['c']) {
-      targetAnimation = 'WalkingBackwards'
+      targetAnimation = GLTFAnimations.walkBackwards
       const speed = keysPressed.shift ? 2 : 1
       this.walk(delta, -1, speed)
     } else if (keysPressed['v']) {
       const speed = keysPressed.shift ? 2 : 1
-      targetAnimation = 'WalkingForward'  // You'll need to add this animation
+      targetAnimation = GLTFAnimations.walkForward
       this.walk(delta, 1, speed)
-    }
+    } else if (keysPressed['e']) {
+      targetAnimation = GLTFAnimations.sideKick
+    } else if (keysPressed['q']) {
+      targetAnimation = GLTFAnimations.hurricaneKick
+    } else if (keysPressed['a']) {
+      targetAnimation = GLTFAnimations.PunchLeft
+    } else if (keysPressed['s']) {
+      targetAnimation = GLTFAnimations.PunchLeft2
+    } else if (keysPressed['d']) {
+      targetAnimation = GLTFAnimations.punchRight
+    } 
 
     // Switch animation if needed
     if (this.currentAction !== targetAnimation) {
