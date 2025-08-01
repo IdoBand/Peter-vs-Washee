@@ -1,0 +1,73 @@
+STEP 1: Select the Armature
+
+    Go to Object Mode (press Tab if you’re not in Object Mode).
+
+    Right-click the Armature (the skeleton) — it’s usually named something like Armature, mixamorig, or Armature.001.
+
+✅ STEP 2: Enter Pose Mode
+
+    With the Armature selected, press Tab to enter Pose Mode.
+
+    Select the bone you want to bake, for example mixamorig:Hips (or press A to select all bones).
+
+✅ STEP 3: Open the "Bake Action" Tool
+
+    In the top-left corner of Blender, find the "Object" menu.
+    You’ll see this change when in Pose Mode — now it's "Pose" instead.
+
+    Click on Pose > Animation > Bake Action
+
+
+    (This is where it is in Pose Mode.)
+
+OR:
+
+    Press F3 (Search), type Bake Action, and click on it.
+
+✅ STEP 4: Bake Settings Window Appears
+
+Fill the options like this:
+Option	What to do
+Frame Start / End	Set to your animation range (e.g., 1 - 32)
+✅ Only Selected Bones	Check it (if you're baking just some bones)
+✅ Visual Keying	✅ Must be ON — it records what you see
+❌ Clear Constraints	Turn OFF unless you want to delete them
+❌ Clear Parents	Keep OFF
+✅ Overwrite Current Action	(Optional) overwrite existing keyframes
+
+Then press OK.
+✅ STEP 5: Confirm It Worked
+
+    Open the Dope Sheet or Graph Editor.
+
+    You’ll see that Blender added a keyframe on every frame (within your selected range).
+
+    These are now baked raw keyframes, so modifiers like "Cyclic" or "Linear Extrapolation" are no longer needed — the motion is preserved.
+
+✅ STEP 6: Export Your FBX
+
+    Select the Armature in Object Mode.
+
+    Go to File > Export > FBX (.fbx).
+
+    In the right panel, configure:
+
+Under Include:
+
+    ✅ Limit to > Selected Objects (check this)
+
+    ✅ Object Types: Armature, Mesh
+
+Under Transform:
+
+    Apply scale if needed (Apply Scalings: FBX Units Scale)
+
+Under Bake Animation:
+
+    ✅ Bake Animation (should be checked)
+
+    ❌ NLA Strips (UNcheck this)
+
+    ❌ All Actions (UNcheck this if you only want current action)
+
+Then click Export FBX.

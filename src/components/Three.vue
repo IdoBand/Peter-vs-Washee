@@ -34,6 +34,8 @@ import type {
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { Player1Controls } from './Player1Controls.ts'
+import { GLTFCharacter } from '../assets/gltfCharacter.ts'
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 
 // Template ref for mounting Three.js
 const mountRef: Ref<HTMLDivElement | undefined> = ref<HTMLDivElement>()
@@ -132,13 +134,24 @@ window.addEventListener('keyup', (e) => {
 
 
 let Peter: Player1Controls
+let gltf: GLTFCharacter
+
 // Load character model
 const loadCharacters = async (): Promise<void> => {
   const loader: FBXLoader = new FBXLoader()
   
- Peter = await new Player1Controls(loader, new THREE.Vector3(0, 0, 0)).init()
+  Peter = await new Player1Controls(loader, new THREE.Vector3(0, 0, 0)).init()
+  // scene.add(Peter.model)
 
-  scene.add(Peter.model)
+  const gltfLoader = new GLTFLoader()
+  gltf = new GLTFCharacter(
+    gltfLoader, 
+    '/character_complete.gltf',  // Our new GLTF file
+    new THREE.Vector3(0, 0, 0)
+  )
+  await gltf.init()
+  scene.add(gltf.model)
+
   animate()
 }
 
@@ -149,9 +162,13 @@ const animate = (): void => {
   controls.update()
 
   // Update animations
+  const delta: number = clock.getDelta()
   if (Peter) {
-    const delta: number = clock.getDelta()
     Peter.update(delta, keysPressed)
+  }
+  if (gltf) {
+    
+    gltf.update(delta, keysPressed)
   }
   renderer.render(scene, camera)
 }
