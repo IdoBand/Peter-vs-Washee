@@ -16,9 +16,9 @@ export interface IGLTFCharacter {
 export class GLTFAnimations {
   public static readonly tPose = 'TPose'
   public static readonly idle = 'Idle'
-  public static readonly walkForward = 'WalkingForward'
-  public static readonly walkBackwards = 'WalkingBackwards'
-  public static readonly hurricaneKick = 'HurricaneKick'
+  public static readonly walkForward = 'mixamo.com'
+  public static readonly walkBackwards = 'mixamo.com.001'
+  public static readonly hurricaneKick = 'mixamo.com.002'
   public static readonly sideKick = 'SideKick'
   public static readonly PunchLeft  = 'PunchLeft'
   public static readonly PunchLeft2 = 'PunchLeft2'

@@ -64,7 +64,7 @@ const initScene = (): void => {
     0.1,
     1000
   )
-  camera.position.set(-10, 3, 0)
+  camera.position.set(0, 3, 10)
   camera.lookAt(0, 0, 0)
 
   // Renderer setup
@@ -133,6 +133,7 @@ window.addEventListener('keyup', (e) => {
 
 
 let peter: GLTFCharacter
+let washee: GLTFCharacter
 
 // Load character model
 const loadCharacters = async (): Promise<void> => {
@@ -145,7 +146,17 @@ const loadCharacters = async (): Promise<void> => {
     new THREE.Vector3(0, 0, 0)
   )
   await peter.init()
-  scene.add(peter.model)
+  // scene.add(peter.model)
+
+
+  washee = new GLTFCharacter(
+    gltfLoader,
+    '/washee/character.gltf',
+    new THREE.Vector3(0, 0, 5)
+  )
+
+  await washee.init()
+  scene.add(washee.model)
 
   animate()
 }
@@ -161,6 +172,9 @@ const animate = (): void => {
 
   if (peter) {
     peter.update(delta, keysPressed)
+  }
+  if (washee) {
+    washee.update(delta, keysPressed)
   }
   renderer.render(scene, camera)
 }
